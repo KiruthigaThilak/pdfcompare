@@ -20,7 +20,8 @@
     <artifactId>pdfcompare</artifactId>
     <version>1.1.41-SNAPSHOT</version>
     <name>PdfCompare</name>
-    <url>https://github.com/red6/pdfcompare</url>
+  <!--  <url>https://github.com/red6/pdfcompare</url> -->  <!-- Code commented by Kiruthiga -->
+    <url>https://github.com/KiruthigaThilak/pdfcompare/tree/customForJumbo</url>
     <description>A simple Java library to compare two PDF files. Files are rendered and compared pixel by pixel.</description>
 
     <properties>
@@ -46,7 +47,7 @@
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/red6/pdfcompare/issues</url>
+  <!--        <url>https://github.com/red6/pdfcompare/issues</url> --> <!-- Code commented by Kiruthiga -->
     </issueManagement>
 
     <developers>
@@ -113,11 +114,16 @@
         </dependency>
     </dependencies>
 
-    <scm>
-        <connection>scm:git:git@github.com:red6/pdfcompare.git</connection>
+    <scm> 
+    <!--Code change - Start by Kiruthiga  -->
+ <!--   <connection>scm:git:git@github.com:red6/pdfcompare.git</connection>
         <developerConnection>scm:git:git@github.com:red6/pdfcompare.git</developerConnection>
-        <url>https://github.com/red6/pdfcompare.git</url>
+        <url>https://github.com/red6/pdfcompare.git</url> --> 
+        <connection>scm:git:git@github.com:KiruthigaThilak/pdfcompare.git</connection>
+        <developerConnection>scm:git:git@github.com:KiruthigaThilak/pdfcompare.git</developerConnection>
+        <url>https://github.com/KiruthigaThilak/pdfcompare.git</url>
         <tag>HEAD</tag>
+    <!--Code change - End by Kiruthiga  -->
     </scm>
 
     <distributionManagement>
