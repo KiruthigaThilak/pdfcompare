@@ -64,7 +64,8 @@ public class PdfComparator<T extends CompareResultImpl> {
     private final TimeUnit unit = TimeUnit.MINUTES;
     private String expectedPassword = "";
     private String actualPassword = "";
-
+    private int progress = 0; //Code added by Kiruthiga
+    
     private PdfComparator(T compareResult) {
         Objects.requireNonNull(compareResult, "compareResult is null");
         this.compareResult = compareResult;
@@ -223,11 +224,12 @@ public class PdfComparator<T extends CompareResultImpl> {
 
         actualDocument.setResourceCache(new ResourceCacheWithLimitedImages(environment));
         PDFRenderer actualPdfRenderer = new PDFRenderer(actualDocument);
-
+        int percent = 0; //Code added by Kiruthiga
         final int minPageCount = Math.min(expectedDocument.getNumberOfPages(), actualDocument.getNumberOfPages());
         CountDownLatch latch = new CountDownLatch(minPageCount);
         for (int pageIndex = 0; pageIndex < minPageCount; pageIndex++) {
             drawImage(latch, pageIndex, expectedDocument, actualDocument, expectedPdfRenderer, actualPdfRenderer);
+            progress = (pageIndex/minPageCount)*percent;//Code added by Kiruthiga
         }
         Utilities.await(latch, "FullCompare", environment);
         Utilities.shutdownAndAwaitTermination(drawExecutor, "Draw");
@@ -261,6 +263,7 @@ public class PdfComparator<T extends CompareResultImpl> {
                 });
                 LOG.trace("DONE drawing page {}", pageIndex);
             } catch (RenderingException e) {
+            	throw new RenderingException();//Code added by Kiruthiga
             } finally {
                 latch.countDown();
             }
