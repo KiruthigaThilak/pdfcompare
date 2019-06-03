@@ -64,8 +64,13 @@ public class PdfComparator<T extends CompareResultImpl> {
     private final TimeUnit unit = TimeUnit.MINUTES;
     private String expectedPassword = "";
     private String actualPassword = "";
-    private int progress = 0; //Code added by Kiruthiga
+    //Code change -Start by Kiruthiga
+    private static int progress = 0; 
     
+    public static int getProgress() {
+    	return progress;
+    }
+    //Code change -End by Kiruthiga    
     private PdfComparator(T compareResult) {
         Objects.requireNonNull(compareResult, "compareResult is null");
         this.compareResult = compareResult;
@@ -224,7 +229,7 @@ public class PdfComparator<T extends CompareResultImpl> {
 
         actualDocument.setResourceCache(new ResourceCacheWithLimitedImages(environment));
         PDFRenderer actualPdfRenderer = new PDFRenderer(actualDocument);
-        int percent = 0; //Code added by Kiruthiga
+        int percent = 80; //Code added by Kiruthiga
         final int minPageCount = Math.min(expectedDocument.getNumberOfPages(), actualDocument.getNumberOfPages());
         CountDownLatch latch = new CountDownLatch(minPageCount);
         for (int pageIndex = 0; pageIndex < minPageCount; pageIndex++) {
@@ -263,7 +268,6 @@ public class PdfComparator<T extends CompareResultImpl> {
                 });
                 LOG.trace("DONE drawing page {}", pageIndex);
             } catch (RenderingException e) {
-            	throw new RenderingException();//Code added by Kiruthiga
             } finally {
                 latch.countDown();
             }
@@ -280,6 +284,7 @@ public class PdfComparator<T extends CompareResultImpl> {
             LOG.error("Waiting for Future timed out after {} {} while rendering page {} for {}", timeout, unit, pageIndex, type, e);
         } catch (ExecutionException e) {
             LOG.error("Error while rendering page {} for {}", pageIndex, type, e);
+            throw e;//Code added by Kiruthiga
         }
         throw new RenderingException();
     }
